@@ -1,0 +1,89 @@
+import java.util.Scanner;
+
+public class PowerLevelSort {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] powerLevels = new int[10];
+
+        // Input: Power levels
+        System.out.println("Enter the power levels of 10 creatures:");
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Power level " + (i + 1) + ": ");
+            powerLevels[i] = scanner.nextInt();
+        }
+
+        // Bubble Sort: Ascending order
+        int[] bubbleSorted = bubbleSort(powerLevels.clone());
+        System.out.println("\nPower levels sorted in ascending order (Bubble Sort):");
+        displayArray(bubbleSorted);
+
+        // Selection Sort: Descending order
+        int[] selectionSorted = selectionSort(powerLevels.clone());
+        System.out.println("\nPower levels sorted in descending order (Selection Sort):");
+        displayArray(selectionSorted);
+
+        // Calculate and Display Analysis
+        int sumEven = 0, sumOdd = 0;
+        int min = powerLevels[0], max = powerLevels[0];
+
+        for (int power : powerLevels) {
+            if (power % 2 == 0) {
+                sumEven += power;
+            } else {
+                sumOdd += power;
+            }
+            if (power < min) min = power;
+            if (power > max) max = power;
+        }
+
+        System.out.println("\nAnalysis:");
+        System.out.println("Sum of even numbers: " + sumEven);
+        System.out.println("Sum of odd numbers: " + sumOdd);
+        System.out.println("Minimum power level: " + min);
+        System.out.println("Maximum power level: " + max);
+
+        scanner.close();
+    }
+
+    // Bubble Sort Implementation
+    public static int[] bubbleSort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    // Swap elements
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+        return array;
+    }
+
+    // Selection Sort Implementation
+    public static int[] selectionSort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            int maxIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (array[j] > array[maxIndex]) {
+                    maxIndex = j;
+                }
+            }
+            // Swap elements
+            int temp = array[maxIndex];
+            array[maxIndex] = array[i];
+            array[i] = temp;
+        }
+        return array;
+    }
+
+    // Utility function to display an array
+    public static void displayArray(int[] array) {
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
+}
