@@ -1,52 +1,36 @@
 import java.util.Scanner;
 
-public class PowerLevelSort {
+public class PowerLevelSorter {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int[] powerLevels = new int[10];
 
-        // Input: Power levels
+        // Step 1: Input the Power Levels
         System.out.println("Enter the power levels of 10 creatures:");
         for (int i = 0; i < 10; i++) {
             System.out.print("Power level " + (i + 1) + ": ");
             powerLevels[i] = scanner.nextInt();
         }
 
-        // Bubble Sort: Ascending order
-        int[] bubbleSorted = bubbleSort(powerLevels.clone());
+        // Step 2: Bubble Sort in Ascending Order
+        int[] bubbleSorted = powerLevels.clone();
+        bubbleSort(bubbleSorted);
         System.out.println("\nPower levels sorted in ascending order (Bubble Sort):");
         displayArray(bubbleSorted);
 
-        // Selection Sort: Descending order
-        int[] selectionSorted = selectionSort(powerLevels.clone());
+        // Step 3: Selection Sort in Descending Order
+        int[] selectionSorted = powerLevels.clone();
+        selectionSort(selectionSorted);
         System.out.println("\nPower levels sorted in descending order (Selection Sort):");
         displayArray(selectionSorted);
 
-        // Calculate and Display Analysis
-        int sumEven = 0, sumOdd = 0;
-        int min = powerLevels[0], max = powerLevels[0];
-
-        for (int power : powerLevels) {
-            if (power % 2 == 0) {
-                sumEven += power;
-            } else {
-                sumOdd += power;
-            }
-            if (power < min) min = power;
-            if (power > max) max = power;
-        }
-
+        // Step 4: Analysis
         System.out.println("\nAnalysis:");
-        System.out.println("Sum of even numbers: " + sumEven);
-        System.out.println("Sum of odd numbers: " + sumOdd);
-        System.out.println("Minimum power level: " + min);
-        System.out.println("Maximum power level: " + max);
-
-        scanner.close();
+        calculateAndDisplayAnalysis(powerLevels);
     }
 
-    // Bubble Sort Implementation
-    public static int[] bubbleSort(int[] array) {
+    // Bubble Sort implementation to sort in ascending order
+    private static void bubbleSort(int[] array) {
         int n = array.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -58,11 +42,10 @@ public class PowerLevelSort {
                 }
             }
         }
-        return array;
     }
 
-    // Selection Sort Implementation
-    public static int[] selectionSort(int[] array) {
+    // Selection Sort implementation to sort in descending order
+    private static void selectionSort(int[] array) {
         int n = array.length;
         for (int i = 0; i < n - 1; i++) {
             int maxIndex = i;
@@ -76,14 +59,38 @@ public class PowerLevelSort {
             array[maxIndex] = array[i];
             array[i] = temp;
         }
-        return array;
     }
 
-    // Utility function to display an array
-    public static void displayArray(int[] array) {
-        for (int value : array) {
-            System.out.print(value + " ");
+    // Display array elements
+    private static void displayArray(int[] array) {
+        for (int num : array) {
+            System.out.print(num + " ");
         }
         System.out.println();
+    }
+
+    // Calculate and display analysis
+    private static void calculateAndDisplayAnalysis(int[] array) {
+        int sumEven = 0, sumOdd = 0, min = array[0], max = array[0];
+
+        for (int num : array) {
+            if (num % 2 == 0) {
+                sumEven += num;
+            } else {
+                sumOdd += num;
+            }
+
+            if (num < min) {
+                min = num;
+            }
+            if (num > max) {
+                max = num;
+            }
+        }
+
+        System.out.println("Sum of even power levels: " + sumEven);
+        System.out.println("Sum of odd power levels: " + sumOdd);
+        System.out.println("Minimum power level: " + min);
+        System.out.println("Maximum power level: " + max);
     }
 }
